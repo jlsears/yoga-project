@@ -11,6 +11,26 @@ var starter = require('./routes/starterpage');
 
 var app = express();
 
+var Crawler = require("js-crawler");
+
+app.get('/scrape', function(req, res) {
+
+  // scraping action here
+    console.log("Hey, scraping supposedly in motion!");
+
+    new Crawler().configure({depth: 1}).crawl("http://www.urlhere", function onSuccess(page) {
+      console.log("This page: " + page.url);
+      console.log("Behold body: " + page.body);
+    });
+  
+
+});
+
+app.listen('8081');
+
+console.log('Things will happen on port 8081 it seems');
+
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
@@ -32,10 +52,6 @@ app.use(function(req, res, next) {
   var err = new Error('Not Found');
   err.status = 404;
   next(err);
-});
-
-app.get('/starter',function(req,res){
-  res.sendFile(path.join(__dirname+'/starter.jade'));
 });
 
 // error handlers
