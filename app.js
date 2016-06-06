@@ -10,6 +10,7 @@ var users = require('./routes/users');
 var starter = require('./routes/starterpage');
 
 var app = express();
+var fs = require('fs');
 
 var Crawler = require("js-crawler");
 
@@ -18,12 +19,14 @@ app.get('/scrape', function(req, res) {
   // scraping action here
     console.log("Hey, scraping supposedly in motion!");
 
-    new Crawler().configure({depth: 1}).crawl("http://www.urlhere", function onSuccess(page) {
+    new Crawler().configure({depth: 1}).crawl("urlhere", function onSuccess(page) {
       console.log("This page: " + page.url);
-      console.log("Behold body: " + page.body);
-    });
-  
+      console.log("Behold body: " + page.content);
 
+  fs.writeFile('yogaplan.txt', page.content, function(err) {
+    console.log("Time to check project directory!");
+    });
+  });
 });
 
 app.listen('8081');
