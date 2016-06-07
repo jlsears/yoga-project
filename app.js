@@ -10,9 +10,9 @@ var users = require('./routes/users');
 var starter = require('./routes/starterpage');
 
 var app = express();
+
 var fs = require('fs');
 var cheerio = require('cheerio');
-
 var Crawler = require("js-crawler");
 
 app.get('/scrape', function(req, res) {
@@ -42,8 +42,7 @@ app.get('/scrape', function(req, res) {
         fs.writeFile('second_file.txt', json.letsSee, function(err) {
           console.log("Second file printed!");
         });
-
-      })
+      });
 
   fs.writeFile('yogaplan.txt', page.content, function(err) {
     console.log("Time to check project directory!");
