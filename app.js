@@ -11,6 +11,7 @@ var starter = require('./routes/starterpage');
 
 var app = express();
 var fs = require('fs');
+var cheerio = require('cheerio');
 
 var Crawler = require("js-crawler");
 
@@ -19,9 +20,30 @@ app.get('/scrape', function(req, res) {
   // scraping action here
     console.log("Hey, scraping supposedly in motion!");
 
-    new Crawler().configure({depth: 1}).crawl("urlhere", function onSuccess(page) {
+    new Crawler().configure({depth: 1}).crawl("http://www.urlhere", function onSuccess(page) {
       console.log("This page: " + page.url);
+      console.log("Page status: " +page.status);
       console.log("Behold body: " + page.content);
+
+      var $ = cheerio.load(page.content);
+
+      var findh2, letsSee;
+
+      var json = { findh2 : "", letsSee : ""};
+
+      $('.home').filter(function() {
+        var data = $(this);
+
+        letsSee = data;
+
+        json.letsSee = letsSee;
+        console.log("letsSee is: " + json.letsSee);
+
+        fs.writeFile('second_file.txt', json.letsSee, function(err) {
+          console.log("Second file printed!");
+        });
+
+      })
 
   fs.writeFile('yogaplan.txt', page.content, function(err) {
     console.log("Time to check project directory!");
