@@ -7,6 +7,7 @@ var bodyParser = require('body-parser');
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
+// http://localhost:8080/views/starterpage
 var starter = require('./routes/starterpage');
 
 var app = express();
