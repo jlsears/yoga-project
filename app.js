@@ -44,14 +44,11 @@ app.get('/scrape', function(req, res) {
   function printStudios(callback) {
 
   for (var i = 0; i < theStudios.length; i++) {
-    console.log("value of i pre-crawler: " + i);
 
     callback(theStudios[i]);
 
-    console.log("when does this part happen? " + i);
-
-    var nextUp = theStudios[i];
-    var nextUpNumb = i;
+    //var nextUp = theStudios[i];
+    //var nextUpNumb = i;
 
    }; // end: for loop
   }; // end: printStudios
