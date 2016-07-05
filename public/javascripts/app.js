@@ -1,1 +1,1 @@
-app = angular.module('yogaApp', []);
+//app = angular.module('yogaApp', []);

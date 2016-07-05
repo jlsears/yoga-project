@@ -19,12 +19,14 @@ var Crawler = require("js-crawler");
 app.get('/scrape', function(req, res) {
 
   // scraping action here
-    console.log("Hey, scraping supposedly in motion!");
+  console.log("Hey, scraping supposedly in motion!");
 
-    new Crawler().configure({depth: 1}).crawl("http://www.urlhere", function onSuccess(page) {
-      console.log("This page: " + page.url);
-      console.log("Page status: " +page.status);
-      console.log("Behold body: " + page.content);
+  var theStudios = [{name: "nss", site: "http://nashvillesoftwareschool.com/"}, {name: "kaliyuga", site: "http://www.kaliyugayoga.com/Instructors.html"}];
+
+  // will pass as callback in printStudios to scrape individual site
+  function findYoga(locationYoga) {
+    new Crawler().configure({depth: 1}).crawl(locationYoga.site, function onSuccess(page) {
+      console.log("current site: " + locationYoga.site);
 
       var $ = cheerio.load(page.content);
 
@@ -32,24 +34,31 @@ app.get('/scrape', function(req, res) {
 
       var json = { findh2 : "", letsSee : ""};
 
-      $('.home').filter(function() {
-        var data = $(this);
-
-        letsSee = data;
-
-        json.letsSee = letsSee;
-        console.log("letsSee is: " + json.letsSee);
-
-        fs.writeFile('second_file.txt', json.letsSee, function(err) {
-          console.log("Second file printed!");
-        });
+    fs.writeFile('locations/yogaplan-' + locationYoga.name + '.html', page.content, function(err) {
+      console.log("Time to check project directory! file: yogaplan-" + locationYoga.name);
       });
+    }); //end: new Crawler
+  };
 
-  fs.writeFile('yogaplan.txt', page.content, function(err) {
-    console.log("Time to check project directory!");
-    });
-  });
-});
+  // will loop through each studio in theStudios and initiate scraping action
+  function printStudios(callback) {
+
+  for (var i = 0; i < theStudios.length; i++) {
+    console.log("value of i pre-crawler: " + i);
+
+    callback(theStudios[i]);
+
+    console.log("when does this part happen? " + i);
+
+    var nextUp = theStudios[i];
+    var nextUpNumb = i;
+
+   }; // end: for loop
+  }; // end: printStudios
+
+  printStudios(findYoga);
+
+}); // end: scraping
 
 app.listen('8081');
 
