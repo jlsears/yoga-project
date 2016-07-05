@@ -19,26 +19,23 @@ var Crawler = require("js-crawler");
 app.get('/scrape', function(req, res) {
 
   // scraping action here
-  console.log("Hey, scraping supposedly in motion!");
+  console.log("Hey, scraping in motion!");
 
   var theStudios = [{name: "nss", site: "http://nashvillesoftwareschool.com/"}, {name: "kaliyuga", site: "http://www.kaliyugayoga.com/Instructors.html"}];
 
   // will pass as callback in printStudios to scrape individual site
   function findYoga(locationYoga) {
     new Crawler().configure({depth: 1}).crawl(locationYoga.site, function onSuccess(page) {
+      
       console.log("current site: " + locationYoga.site);
 
       var $ = cheerio.load(page.content);
-
-      var findh2, letsSee;
-
-      var json = { findh2 : "", letsSee : ""};
 
     fs.writeFile('locations/yogaplan-' + locationYoga.name + '.html', page.content, function(err) {
       console.log("Time to check project directory! file: yogaplan-" + locationYoga.name);
       });
     }); //end: new Crawler
-  };
+  }; // end: findYoga
 
   // will loop through each studio in theStudios and initiate scraping action
   function printStudios(callback) {
@@ -47,15 +44,13 @@ app.get('/scrape', function(req, res) {
 
     callback(theStudios[i]);
 
-    //var nextUp = theStudios[i];
-    //var nextUpNumb = i;
-
    }; // end: for loop
   }; // end: printStudios
 
+
   printStudios(findYoga);
 
-}); // end: scraping
+}); // end: scraping action
 
 app.listen('8081');
 
