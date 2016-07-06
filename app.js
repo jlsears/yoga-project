@@ -21,14 +21,10 @@ app.get('/scrape', function(req, res) {
   // scraping action here
   console.log("Hey, scraping in motion!");
 
-  var theStudios = [{name: "nss", site: "htt://nashvillesoftwareschools.com/"}, {name: "kaliyuga", site: "http://www.kaliyugayoga.com/Instructors.html"}];
+  var theStudios = [{name: "nss", site: "http://nashvillesoftwareschoolss.com/"}, {name: "kaliyuga", site: "http://www.kaliyugayoga.com/Instructors.html"}];
 
   // will pass as callback in printStudios to scrape individual site
   function findYoga(locationYoga) {
-
-    var examineHttp = locationYoga.site.slice(0, 4);
-
-    if(examineHttp === "http") {
 
     new Crawler().configure({depth: 1}).crawl(locationYoga.site, function onSuccess(page) {
       
@@ -39,13 +35,16 @@ app.get('/scrape', function(req, res) {
     fs.writeFile('locations/yogaplan-' + locationYoga.name + '.html', page.content, function(err) {
       console.log("Time to check project directory! file: yogaplan-" + locationYoga.name);
         });
-      }); //end: new Crawler
-      return;
-    };
+      }, 
 
-    fs.writeFile('locations/yogaplan-' + 'FAILED-TO-PRINT-' + locationYoga.name + '.html', "Error printing for this site", function(err) {
-      console.log("Time to check project directory! file: yogaplan-" + locationYoga.name + 'FAILED-TO-PRINT');
-    });
+      // Handling errors in page retrieval/file printing
+      function(response) {console.log("Pinting error occurred for: " + response.url);
+
+      fs.writeFile('locations/yogaplan-' + 'FAILED-TO-PRINT-' + locationYoga.name + '.html', "Error printing for this site - error response is: " + response.status, function(err) {
+        console.log("Time to check project directory! file: yogaplan-" + locationYoga.name + 'FAILED-TO-PRINT');
+        console.log("response status: " + response.status);
+      });      
+    }); //end: new Crawler
   }; // end: findYoga
 
   // will loop through each studio in theStudios and initiate scraping action
