@@ -26,14 +26,9 @@ app.get('/scrape', function(req, res) {
   // will pass as callback in printStudios to scrape individual site
   function findYoga(locationYoga) {
 
-    console.log("made it to findyoga");
-
     var examineHttp = locationYoga.site.slice(0, 4);
-    console.log("examineHttp is: "+ examineHttp);
 
     if(examineHttp === "http") {
-
-      console.log("Made it to if statement");
 
     new Crawler().configure({depth: 1}).crawl(locationYoga.site, function onSuccess(page) {
       
@@ -48,7 +43,6 @@ app.get('/scrape', function(req, res) {
       return;
     };
 
-    console.log("made it past if statement");
     fs.writeFile('locations/yogaplan-' + 'FAILED-TO-PRINT-' + locationYoga.name + '.html', "Error printing for this site", function(err) {
       console.log("Time to check project directory! file: yogaplan-" + locationYoga.name + 'FAILED-TO-PRINT');
     });
