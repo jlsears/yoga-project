@@ -21,11 +21,11 @@ app.get('/scrape', function(req, res) {
   // scraping action here
   console.log("Hey, scraping in motion!");
 
-  var theStudios = [{name: "kaliyuga", site: "http://www.kaliyugayoga.com/Instructors.html"}, 
-    {name: "12southyoga", site: "http://12southyoga.com/classes/"},
-    {name:"yoga_harmony", site:"http://www.yogaharmonynashville.com/classes.html"},
-    {name: "hot_yoga_of_east_nashville", site: "http://hotyogaeastnashville.com/classes-and-schedule/"},
-    {name: "steadfast_and_true_yoga", site: "http://www.steadfastandtrueyoga.com/classes/schedule/"}];
+  var theStudios = [{studio_id: 1, name: "kaliyuga", site: "http://www.kaliyugayoga.com/Instructors.html"}, 
+    {studio_id: 2, name: "12southyoga", site: "http://12southyoga.com/classes/"},
+    {studio_id: 3, name:"yoga_harmony", site:"http://www.yogaharmonynashville.com/classes.html"},
+    {studio_id: 4, name: "hot_yoga_of_east_nashville", site: "http://hotyogaeastnashville.com/classes-and-schedule/"},
+    {studio_id: 5, name: "steadfast_and_true_yoga", site: "http://www.steadfastandtrueyoga.com/classes/schedule/"}];
 
   // will pass as callback in printStudios to scrape individual site
   function findYoga(locationYoga) {
