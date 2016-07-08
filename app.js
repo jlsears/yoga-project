@@ -36,7 +36,7 @@ app.get('/scrape', function(req, res) {
 
       var $ = cheerio.load(page.content);
 
-    fs.writeFile('locations/yogaplan-' + locationYoga.name + '.html', page.content, function(err) {
+    fs.writeFile('locations/yogaplan-' + locationYoga.studio_id + '.html', page.content, function(err) {
       console.log("Time to check project directory! file: yogaplan-" + locationYoga.name);
         });
       }, 
