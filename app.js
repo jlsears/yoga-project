@@ -42,7 +42,7 @@ app.get('/scrape', function(req, res) {
       }, 
 
       // Handling errors in page retrieval/file printing
-      function(response) {console.log("Pinting error occurred for: " + response.url);
+      function(response) {console.log("Printing error occurred for: " + response.url);
 
       fs.writeFile('locations/yogaplan-' + 'FAILED-TO-PRINT-' + locationYoga.name + '.html', "Error printing for this site - error response is: " + response.status, function(err) {
         console.log("Time to check project directory! file: yogaplan-" + locationYoga.name + 'FAILED-TO-PRINT');
